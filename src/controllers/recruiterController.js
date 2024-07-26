@@ -1,4 +1,3 @@
-// src/controllers/recruiterController.js
 const User = require('../models/user');
 
 // Get all developers (for recruiters)

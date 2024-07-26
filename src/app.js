@@ -10,7 +10,7 @@ const connectDB = require('./database');
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type'
+    allowedHeaders: ['Content-Type', 'authToken']
   }));
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +21,6 @@ app.use(defineCurrentUser);
 connectDB();
 
 // Controllers & Routes
-app.use('/users', require('./controllers/users'));
 app.use('/authentication', require('./controllers/authentication'));
 
 // Listen for Connections

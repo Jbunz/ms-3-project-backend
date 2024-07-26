@@ -1,4 +1,3 @@
-// src/controllers/developerController.js
 const User = require('../models/user');
 
 // Update a developer profile
