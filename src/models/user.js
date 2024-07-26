@@ -1,3 +1,4 @@
+// src/models/user.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -11,6 +12,7 @@ const UserSchema = new mongoose.Schema({
         skills: { type: [String], default: [] },
         experience: { type: String, default: '' }
     },
+    recruiter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null } // Reference to recruiter for developers
 }, { timestamps: true });
 
 // Hash password before saving

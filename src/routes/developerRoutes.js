@@ -1,10 +1,9 @@
-// src/routes/developerRoutes.js
 const express = require('express');
 const router = express.Router();
 const developerController = require('../controllers/developerController');
 
-// Developer routes
-router.put('/profile', developerController.updateDeveloperProfile);
-router.delete('/profile', developerController.deleteDeveloperProfile);
+router.put('/update', developerController.updateDeveloperProfile);
+router.delete('/delete', developerController.deleteDeveloperProfile);
+router.post('/assign', developerController.assignDeveloperToRecruiter);
 
 module.exports = router;
