@@ -22,6 +22,7 @@ connectDB();
 
 // Controllers & Routes
 app.use('/authentication', require('./controllers/authentication'));
+app.use('/recruiter', require('./controllers/recruiterController'));
 
 // Listen for Connections
 app.listen(process.env.PORT, () => {

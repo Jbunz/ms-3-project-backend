@@ -1,19 +1,40 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/User');
+const Developer = require('../models/Developer');
+const Recruiter = require('../models/Recruiter');
 const router = express.Router();
 
 // Signup route
 router.post('/signup', async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { firstName, lastName, email, password, role, company } = req.body;
+
   try {
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-    user = new User({ firstName, lastName, email, password, role });
+    if (role === 'developer') {
+      user = new Developer({ 
+        firstName, 
+        lastName, 
+        email, 
+        password 
+      });
+    } else if (role === 'recruiter') {
+      user = new Recruiter({ 
+        firstName, 
+        lastName, 
+        email, 
+        password, 
+        profile: { company } 
+      });
+    } else {
+      return res.status(400).json({ msg: 'Invalid role' });
+    }
+
     user.password = await bcrypt.hash(password, 12);
     await user.save();
 
@@ -50,8 +71,11 @@ router.post('/signin', async (req, res) => {
 });
 
 // Auth route
-router.get('/profile', async (req, res) => {
-  res.json(req.user)
-})
+router.get('/profile', (req, res) => {
+  if (!req.user) {
+    return res.status(204).send()
+  }
+  res.json(req.user);
+});
 
 module.exports = router;
