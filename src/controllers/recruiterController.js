@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/User');
 
 // Get all developers (for recruiters)
 exports.getAllDevelopers = async (req, res) => {
