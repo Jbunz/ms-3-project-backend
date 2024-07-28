@@ -1,4 +1,3 @@
-// src/models/user.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -8,9 +7,9 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true },
     role: { type: String, enum: ['developer', 'recruiter'], required: true },
     profile: {
-        bio: { type: String, default: '' },
-        skills: { type: [String], default: [] },
-        experience: { type: String, default: '' }
+        description: { type: String, default: '' }, // Changed from bio to description
+        languages: { type: [String], default: [] }, // Changed from skills to languages
+        projects: { type: [String], default: [] } // Changed from experience to projects
     },
     recruiter: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null } // Reference to recruiter for developers
 }, { timestamps: true });

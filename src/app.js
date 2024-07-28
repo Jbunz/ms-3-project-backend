@@ -2,8 +2,6 @@ const express = require('express');
 require('dotenv').config();
 const connectDB = require('./database');
 const userRoutes = require('./routes/userRoutes');
-const developerRoutes = require('./routes/developerRoutes'); 
-const recruiterRoutes = require('./routes/recruiterRoutes'); 
 const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
@@ -16,8 +14,6 @@ connectDB();
 
 // Use routes
 app.use('/api/users', userRoutes);
-app.use('/api/developers', developerRoutes); 
-app.use('/api/recruiters', recruiterRoutes); 
 
 // Use error handling middleware
 app.use(errorHandler);
