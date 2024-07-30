@@ -2,6 +2,25 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 
+// Get developer profile by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const user = await User.findOne({ _id: id, role: 'Developer' });
+        if (!user) {
+            console.log('User not found or not a Developer');
+            return res.status(404).json({ message: 'User not found or not a Developer' });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+
 // Update a developer profile
 router.put('/update', async (req, res) => {
     try {
