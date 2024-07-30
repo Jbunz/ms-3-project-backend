@@ -58,6 +58,33 @@ router.put('/update/description', async (req, res) => {
                 $set: { 'profile.description': description }
             }
         );
+
+        const updatedUser = await User.findById(id);
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+router.put('/update/projects', async (req, res) => {
+    try {
+        const { id, projects } = req.body;
+
+        if (!id || !projects) {
+            return res.status(400).json({ message: 'Invalid request data' });
+        }
+
+        const user = await User.findOne({ _id: id, role: 'Developer' });
+        if (!user) {
+            console.log('User not found or not a Developer');
+            return res.status(404).json({ message: 'User not found or not a Developer' });
+        }
+
+        await User.updateOne(
+            { _id: id, role: 'Developer' },
+            { $set: { 'profile.projects': projects } }
+        );
         
         const updatedUser = await User.findById(id);
         res.status(200).json(updatedUser);
