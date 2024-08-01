@@ -12,4 +12,16 @@ router.get("/devs", async (req, res) => {
   }
 });
 
+router.get('/languages', async (req, res) => {
+  try {
+    const { language } = req.query;
+    // const query = language ? { 'languages.name': language } : {};
+    const query = language ? { 'profile.languages': { $regex: new RegExp(language, 'i') } } : {};
+    const developers = await User.find({ ...query, role: 'Developer' });
+    res.status(200).json(developers);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 module.exports = router;
